@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday To You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="./cakestyle.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <style>
+    /* Popup styling */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 400px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1000;
+      text-align: center;
+    }
+    #popup h2 {
+      margin-bottom: 10px;
+    }
+    #popup textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 8px;
+    }
+    #popup button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #popup button:hover {
+      background-color: #ff85c1;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    /* Password popup styling */
+    #password-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 300px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1000;
+      text-align: center;
+    }
+    #password-popup input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center; /* Existing line */
+      margin: 0 auto; /* Added this line */
+    }
+    #password-popup button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #password-popup button:hover {
+      background-color: #ff85c1;
+    }
+  </style>
+</head>
+<body>
+<audio id="background-music" loop>
+  <source src="happy-birthday-254480.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="letter-section">
+  <h1>Happy Birthday My Honn!</h1>
+  <p>Happy Birthdayyy, My Honeyyy! 🍒🎉 You’re the sweetest, cutest, and most amazing person I ever met. I hope today brings you as much joy as you bring to my life. Every smile of yours lights up my soul, and every moment with you feels like magic. I want you to know that I’ll always cherish you, protect you, and love you more with each passing day. you know that I'm not that creative in writing so I can't express my feelings for you. I want to celebrate all your upcomming birthdays with you 💕Always love you 5000              -Your Honn Kalana-</p>
+</div>
+
+<div class="cake">
+    <div class="plate"></div>
+    <div class="layer layer-bottom"></div>
+    <div class="layer layer-middle"></div>
+    <div class="layer layer-top"></div>
+    <div class="icing"></div>
+    <div class="drip drip1"></div>
+    <div class="drip drip2"></div>
+    <div class="drip drip3"></div>
+    <div class="candle">
+        <div class="flame"></div>
+    </div>
+    <div class="candle candle1">
+        <div class="flame"></div>
+    </div>
+    <div class="candle candle2">
+        <div class="flame"></div>
+    </div>
+</div>
+
+<div class="buttons">
+  <button onclick="showPasswordPopup()">Gallery</button>
+  <button onclick="blowCandles()">Blow candles & make a wish</button>
+  <button onclick="playMusic()" style="display: none;">Play Music</button>
+</div>
+
+<div class="balloons" id="balloons-container">
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+  <div class="balloon" onclick="popBalloon(this)"></div>
+</div>
+
+<div id="overlay"></div>
+<div id="popup">
+  <h2>Make a Wish ✨</h2>
+  <textarea id="wishInput" placeholder="Enter your wish here..."></textarea>
+  <button onclick="sendWish()">Send Wish</button>
+</div>
+
+<div id="password-popup">
+  <h2>Enter Passcode</h2>
+  <input type="password" id="passcodeInput" placeholder="Enter passcode">
+  <button onclick="validatePasscode()">Submit</button>
+</div>
+
+<script>
+function blowCandles() {
+  // Hide the flames
+  const flames = document.querySelectorAll('.flame');
+  flames.forEach(flame => flame.style.display = 'none');
+
+  // Show the popup after a delay
+  setTimeout(() => {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popup').style.display = 'block';
+  }, 2000); // 2-second delay
+}
+
+function playMusic() {
+  const music = document.getElementById('background-music');
+  music.play();
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const music = document.getElementById('background-music');
+  music.play().catch(() => {
+    // Autoplay was prevented, show play button
+    const playButton = document.querySelector('.buttons button[onclick="playMusic()"]');
+    playButton.style.display = 'inline-block';
+  });
+});
+
+function popBalloon(balloon) {
+  balloon.style.display = 'none';
+  setTimeout(() => {
+    balloon.style.display = 'block';
+    balloon.style.left = Math.random() * 100 + '%';
+  }, 1000);
+}
+
+function sendWish() {
+  const wish = document.getElementById('wishInput').value.trim();
+  if (wish === '') {
+    alert('Please enter a wish before sending!');
+    return;
+  }
+
+  // Send the email using the mailto protocol
+  const email = 'kalanabimsara8@gmail.com';
+  const subject = 'Birthday Wish 🎂';
+  const body = `Here's a birthday wish: \n\n${wish}`;
+  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Open the mail client
+  window.location.href = mailtoLink;
+
+  // Close the popup
+  closePopup();
+}
+
+function showPasswordPopup() {
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('password-popup').style.display = 'block';
+}
+
+function validatePasscode() {
+  const passcode = document.getElementById('passcodeInput').value;
+  if (passcode === '3624') {
+    window.location.href = 'gallery.html';
+  } else {
+    alert('Incorrect passcode. Please try again.');
+  }
+}
+
+function closePopup() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('popup').style.display = 'none';
+  document.getElementById('password-popup').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
